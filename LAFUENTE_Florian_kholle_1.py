@@ -6,7 +6,6 @@ import re
 filename = 'entiers.csv'
 
 # Retourne tout les nombres du tableau (que les nombres soient en colonne ou en colonne)
-# Note: les nombres doivent être des entiers
 def getAllNumbers(filename):
     csvfile = open(filename, newline='')
     reader = csv.reader(csvfile)
@@ -57,7 +56,7 @@ if option == '-a':
             print('L\'argument "' + arg + '" n\'est pas un entier et ne sera pas pris en compte dans cette commande')
 
     if len(numbers) < 1:
-        print('Pas d\'entier à ajouter au fichier')
+        print('Pas d\'entier à ajouter au fichier') #####
         exit()
     
     numbers = getAllNumbers(filename) + numbers
@@ -69,4 +68,48 @@ if option == '-a':
 if option == '-c':
     write(filename, '')
     print('Clear réussi')
-    
+
+# Donne le plus petit/grand entier ou calcule la moyenne/somme des entiers (selon les arguments)
+if option == '-s':
+    numbers = getAllNumbers(filename)
+    if len(numbers) < 1:
+        print('Pas d\'entiers dans le fichier')
+        exit()
+
+    if len(sys.argv) < 3:
+        print('Pas assez d\'arguments') #####
+        exit()
+
+    arg = sys.argv[2]
+    if arg == '--moy' or arg == '--sum':
+        sum = 0
+        for number in numbers:
+            sum += number
+
+        if arg == '--moy':
+            moy = sum / len(numbers)
+            print('La moyenne est de : ' + str(moy))
+            exit()
+
+        print('La somme est de : ' + str(sum))
+
+    elif arg == '--min' or arg == '--max':
+        rslt = numbers[0]
+        for number in numbers:
+            condition = rslt > number if arg == '--min' else rslt < number
+            if condition:
+                rslt = number
+        msg = 'Le plus petit ' if arg == '--min' else 'Le plus grand '
+        print(msg + 'nombre est : ' + str(rslt))
+
+    else:
+        print('Argument "' + arg + '" non valide.') ####
+
+if option == '--help':
+    print('     -l, Affiche le contenu de la liste')
+    print('     -a [nb1 nb2 nb3], Ajoute tout les nombres données en arguments à la liste')
+    print('     -c, Supprime tout les éléments de la liste')
+    print('     -s --min, Affiche la plus petite valeur de la liste')
+    print('     -s --max, Affiche la plus grande valeur de la liste')
+    print('     -s --moy, Affiche la moyenne des valeurs de la liste')
+    print('     -s --sum, Affiche la somme des valeurs de la liste')
