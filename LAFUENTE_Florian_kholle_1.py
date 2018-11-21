@@ -38,7 +38,7 @@ def write(filename, writtenData):
 
 # Si pas d'options, on choisit une option par défaut
 if len(sys.argv) < 2:
-    sys.argv[1] = '--help'
+    sys.argv.append('--help')
 option = sys.argv[1]
 
 # Affiche le contenu du fichier .cvs
@@ -47,7 +47,7 @@ if option == '-l':
     print('Nombres entiers du fichier : ' + str(numbers))
 
 # Ajoute des entiers dans le fichier .cvs
-if option == '-a':
+elif option == '-a':
     numbers = []
     for arg in sys.argv[2:]:
         if re.match(r"([0-9])", arg):
@@ -65,12 +65,12 @@ if option == '-a':
     print('Réussite de l\'écriture')
 
 # Clear le fichier .cvs
-if option == '-c':
+elif option == '-c':
     write(filename, '')
     print('Clear réussi')
 
 # Donne le plus petit/grand entier ou calcule la moyenne/somme des entiers (selon les arguments)
-if option == '-s':
+elif option == '-s':
     numbers = getAllNumbers(filename)
     if len(numbers) < 1:
         print('Pas d\'entiers dans le fichier')
@@ -105,11 +105,31 @@ if option == '-s':
     else:
         print('Argument "' + arg + '" non valide.') ####
 
+elif option == '-t':
+    numbers = getAllNumbers(filename)
+    if len(numbers) < 1:
+        print('Pas d\'entiers dans le fichier')
+        exit()
+    
+    option = 'asc'
+    if len(sys.argv) > 2:
+        if sys.argv[2] == '--desc':
+            option = 'desc'
+
+    rslt = []
+    
+
+else:
+    option = '--help'
+
 if option == '--help':
+    print('\nAide de la commande: ')
     print('     -l, Affiche le contenu de la liste')
-    print('     -a [nb1 nb2 nb3], Ajoute tout les nombres données en arguments à la liste')
+    print('     -a [nb1 nb2 nb3 ...], Ajoute tout les nombres données en arguments à la liste')
     print('     -c, Supprime tout les éléments de la liste')
     print('     -s --min, Affiche la plus petite valeur de la liste')
     print('     -s --max, Affiche la plus grande valeur de la liste')
     print('     -s --moy, Affiche la moyenne des valeurs de la liste')
     print('     -s --sum, Affiche la somme des valeurs de la liste')
+    print('     -t, Trie les éléments de la liste dans l\'ordre croissant')
+    print('     -t --desc, Trie les éléments de la liste dans l\'ordre décroissant')
