@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3.6 
+# Auteur: Florian LAFUENTE
+# Date: 25/11/2018
+
 import sys
 import csv
 import re
@@ -56,7 +59,7 @@ elif option == '-a':
             print('L\'argument "' + arg + '" n\'est pas un entier et ne sera pas pris en compte dans cette commande')
 
     if len(numbers) < 1:
-        print('Pas d\'entier à ajouter au fichier') #####
+        print('Pas d\'entier(s) à ajouter au fichier')
         exit()
     
     numbers = getAllNumbers(filename) + numbers
@@ -77,7 +80,7 @@ elif option == '-s':
         exit()
 
     if len(sys.argv) < 3:
-        print('Pas assez d\'arguments') #####
+        print('Pas assez d\'arguments (--min, --max, --moy, --sum)')
         exit()
 
     arg = sys.argv[2]
@@ -103,20 +106,34 @@ elif option == '-s':
         print(msg + 'nombre est : ' + str(rslt))
 
     else:
-        print('Argument "' + arg + '" non valide.') ####
+        print('Argument "' + arg + '" non valide.')
+        option = '--help'
 
 elif option == '-t':
     numbers = getAllNumbers(filename)
-    if len(numbers) < 1:
+    numbersLen = len(numbers)
+    if numbersLen < 1:
         print('Pas d\'entiers dans le fichier')
         exit()
     
-    option = 'asc'
+    ordre = 'asc'
     if len(sys.argv) > 2:
         if sys.argv[2] == '--desc':
-            option = 'desc'
+            ordre = 'desc'
 
     rslt = []
+    for i in range(numbersLen):
+        min = numbers[0]
+        for number in numbers:
+            condition = min > number if ordre == 'asc' else min < number
+            if condition:
+                min = number
+        numbers.remove(min)
+        rslt.append(min)
+
+    msg = 'Liste dans l\'ordre '
+    msg += 'croissant : ' if ordre == 'asc' else 'décroissant : '
+    print(msg + str(rslt))
     
 
 else:
