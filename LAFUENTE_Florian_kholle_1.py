@@ -8,7 +8,7 @@ import re
 
 filename = 'entiers.csv'
 
-# Retourne tout les nombres du tableau (que les nombres soient en colonne ou en colonne)
+# Retourne tout les nombres entiers du tableau
 def getAllNumbers(filename):
     csvfile = open(filename, newline='')
     reader = csv.reader(csvfile)
@@ -109,6 +109,7 @@ elif option == '-s':
         print('Argument "' + arg + '" non valide.')
         option = '--help'
 
+# Retourne tout les nombres dans l'ordre croissant/décroissant
 elif option == '-t':
     numbers = getAllNumbers(filename)
     numbersLen = len(numbers)
@@ -135,10 +136,10 @@ elif option == '-t':
     msg += 'croissant : ' if ordre == 'asc' else 'décroissant : '
     print(msg + str(rslt))
     
-
 else:
     option = '--help'
 
+# Affiche l'aide
 if option == '--help':
     print('\nAide de la commande: ')
     print('     -l, Affiche le contenu de la liste')
@@ -150,3 +151,4 @@ if option == '--help':
     print('     -s --sum, Affiche la somme des valeurs de la liste')
     print('     -t, Trie les éléments de la liste dans l\'ordre croissant')
     print('     -t --desc, Trie les éléments de la liste dans l\'ordre décroissant')
+    print('     --help, Affiche l\'aide')
