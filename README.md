@@ -6,6 +6,7 @@ Ce programme est une sorte d’utilitaire permettant de faire des opérations si
 
 ## Fonctionnalités
 Appel à la commande : [nom_fichier].py -option
+
 Je liste ici l'option ainsi que l'effet de cette dernière.
 
 * `-l` : Affiche le contenu de la liste
@@ -21,4 +22,5 @@ Je liste ici l'option ainsi que l'effet de cette dernière.
 
 ## Notes
 Faire attention a bien entrer des nombres entiers dans le fichier csv.
+
 En cas de problème : florian.lafuente@ynov.com
